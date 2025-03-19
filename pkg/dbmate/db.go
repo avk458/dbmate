@@ -388,7 +388,7 @@ func (db *DB) Migrate() error {
 			// run actual migration
 			result, err := tx.Exec(parsed.Up)
 			if err != nil {
-				return drv.QueryError(parsed.Up, err)
+				return fmt.Errorf("%s %w", migration.Version, drv.QueryError(parsed.Up, err))
 			} else if db.Verbose {
 				db.printVerbose(result)
 			}
